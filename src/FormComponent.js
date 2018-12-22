@@ -14,9 +14,20 @@ class Form extends Component {
         );
     }
 
+    resetForm() {
+        this.setState({
+        name: "",
+        price: 0,
+        description: "",
+        image: ""
+        });
+    }
+
     handeSubmit = (event) => {
         event.preventDefault();
         this.props.addProduct(this.state);
+
+        this.resetForm();
     }
 
 

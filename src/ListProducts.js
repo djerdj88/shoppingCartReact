@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ProductItem from './ProductItem';
 
-const ListProducts = (props) => {
-    const list = props.products.map(function (product){
+class ListProducts extends Component{
+    render(){
+    const list = this.props.products.map((product) =>{
         return <ProductItem
         key = {product.id}
         name = {product.name}
         imageUrl = {product.image}
         price = {product.price}
         description = {product.description}
+        addProduct ={this.props.addToShoppingCart}
+        product = {product}
         />
     })
     return (
@@ -16,6 +19,7 @@ const ListProducts = (props) => {
         {list}
     </div>
     );
+    }
 }
 
 export default ListProducts;

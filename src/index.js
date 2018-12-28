@@ -5,17 +5,28 @@ import Form from './FormComponent';
 import ListProducts from './ListProducts';
 import ShoppingCart from './ShoppingCart';
 
+//{id: 1, name: "Sample Watch", price: 300, description: "Sample description..", image: "https://sc02.alicdn.com/kf/HTB1gHRfg6uhSKJjSspmq6AQDpXaI/Accept-Sample-Design-Your-Own-Blank-Wrist.jpg_350x350.jpg"},
+//{id: 2, name: "Product #2", price: 199, description: "Sample description..", image: "https://pl.shadestation.com/media/thumbs/350x350/media/product_images/Fossil-Watches-FS5439fw350fh350.jpg"}
+
 class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            products: [
-                {id: 1, name: "Sample Watch", price: 300, description: "Sample description..", image: "https://sc02.alicdn.com/kf/HTB1gHRfg6uhSKJjSspmq6AQDpXaI/Accept-Sample-Design-Your-Own-Blank-Wrist.jpg_350x350.jpg"},
-                {id: 2, name: "Product #2", price: 199, description: "Sample description..", image: "https://pl.shadestation.com/media/thumbs/350x350/media/product_images/Fossil-Watches-FS5439fw350fh350.jpg"}
-            ],
+            products: [],
             shoppingProducts: {},
             total: 0
         }
+    }
+
+    componentDidMount() {
+        const temp = localStorage.getItem("products");
+       setTimeout(() => {
+        this.setState({
+            products: JSON.parse(temp || "[]")
+        })    
+       }, 1000);
+        
+
     }
 
     addProduct = product =>{
@@ -24,11 +35,14 @@ class App extends Component {
         }
         this.setState({
             products: [...this.state.products, product]
+        }, () => {
+            localStorage.setItem("products", JSON.stringify(this.state.products));
         })
+        
     }
 
     addToShoppingCart = (obj) => {
-        return event => {
+        return () => {
            const temporary = {...this.state.shoppingProducts,
                  [obj.id]: this.state.shoppingProducts[obj.id] || obj}
 
@@ -45,7 +59,7 @@ class App extends Component {
     }
 
     removeFromShoppingCart = (obj) => {
-        return event => {
+        return () => {
             const temporary = {...this.state.shoppingProducts,
                 [obj.id]: this.state.shoppingProducts[obj.id] || obj}
 

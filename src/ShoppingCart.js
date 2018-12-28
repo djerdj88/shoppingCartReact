@@ -5,7 +5,6 @@ class ShoppingCart extends Component {
   render() {
     const Item = Object.values(this.props.shoppingProducts);
     const ShopItem = Item.map((product) => {
-      console.log(product);
       return <ShoppingCartItem 
       product ={product}
       addToShoppingCart = {this.props.addToShoppingCart}

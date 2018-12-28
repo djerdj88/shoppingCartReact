@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import ProductItem from './ProductItem';
+import Spinner from './spinner';
+
+function If (props) {
+    return props.condition ? props.children : null;
+}
 
 class ListProducts extends Component{
     render(){
@@ -17,6 +22,9 @@ class ListProducts extends Component{
     return (
         <div className="list-products">
         {list}
+        <If condition={this.props.products.length === 0}>
+           <Spinner /> 
+        </If>
     </div>
     );
     }
